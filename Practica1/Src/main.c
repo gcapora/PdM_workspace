@@ -69,22 +69,31 @@ int main(void)
    * 	Los almaceno en un array para poder
    * 	inicializarlos y modificar su estado
    * 	mediante un índice                 */
-  Led_TypeDef Led_N[3] = {LED3, LED2, LED1};
-  int Led_Totales = sizeof(Led_N) / sizeof(Led_N[0]);		// Me almacena la cantidad de leds utilizados
+  Led_TypeDef Led_N[3] = {LED1, LED2, LED3};
+  int Led_Totales = sizeof(Led_N) / sizeof(Led_N[0]);		// Almacena la cantidad de leds utilizados
   int Led_Actual = 0;										// Empieza por el array 0
   for (int i=0; i<Led_Totales; i++) BSP_LED_Init(Led_N[i]);	// Inicializo todos
+
+  /* Initialize BSP PB for BUTTON_USER */
+  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
+  int Orden = 1; // Avanza. Si es -1 va en sentido contrario.
 
   /* Infinite loop */
   while (1)
   {
 	  /* Prendo y apago un led				*/
 	  BSP_LED_On(Led_N[Led_Actual]);
-	  HAL_Delay(300);
+	  HAL_Delay(200);
 	  BSP_LED_Off(Led_N[Led_Actual]);
+	  HAL_Delay(200);
+
+	  /* Leo el pulsador y cambio o no el orden de leds */
+	  if (BSP_PB_GetState(BUTTON_USER)) Orden = -Orden; // Cambia el orden de luces
 
 	  /* Cambio el led a prender			*/
-	  Led_Actual++;
+	  Led_Actual = Led_Actual+Orden;
 	  if (Led_Actual>=Led_Totales) Led_Actual=0;
+	  if (Led_Actual<0) Led_Actual=Led_Totales-1;
 
   }
 }
