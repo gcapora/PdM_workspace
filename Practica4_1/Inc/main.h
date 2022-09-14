@@ -23,7 +23,7 @@ typedef enum{
     BUTTON_FALLING,
     BUTTON_DOWN,
     BUTTON_RISING
-} estadoMEF_t;		// Estados posibles de mi MEF antirrebote
+} debounceState_t;		// Estados posibles de mi MEF antirrebote
 
 /* Constants -----------------------------------------------------------------*/
 

@@ -1,6 +1,6 @@
 /*******************************************************************************
   * @file    Practica3 ... API_delay.h
-  * @author  GFC
+  * @author  Guillermo Caporlaetti
   * @brief   Header for API_delay.c module
   ******************************************************************************
   *
@@ -28,6 +28,7 @@ typedef struct{
 } delay_t;
 
 /* Constants -----------------------------------------------------------------*/
+const delay_t MAX_DELAY = 30000;   // medido en milisegundos
 
 /* Functions -----------------------------------------------------------------*/
 void delayInit( delay_t * delay, tick_t duration );

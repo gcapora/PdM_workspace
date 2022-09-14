@@ -1,7 +1,7 @@
 /*******************************************************************************
-  * @file    Practica3 ... API_delay.c
-  * @author  GFC
-  * @brief   Modulo de funciones para retardo no bloqueante.
+  * @file    API_delay.c
+  * @author  Guillermo Caporaletti
+  * @brief   Módulo de funciones para retardo no bloqueante.
   ******************************************************************************
   *
   ******************************************************************************
@@ -13,12 +13,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
-
 /* Private variables ---------------------------------------------------------*/
-
 /* Private functions ---------------------------------------------------------*/
 
-/**
+/*******************************************************************************
   * @brief  Carga el valor de duración del retardo en la estructura
   *			Inicializa el flag running en `false´.
   */
@@ -28,8 +26,8 @@ void delayInit( delay_t * delay, tick_t duration )
 	delay->running = false;
 }
 
-/**
-  * @brief	Verifica el estado del flag running
+/*******************************************************************************
+  * @brief	Verifica el estado del flag running.
   */
 bool_t delayRead( delay_t * delay )
 {
@@ -49,8 +47,8 @@ bool_t delayRead( delay_t * delay )
 	return ended;
 }
 
-/**
-  * @brief  Cambia el valor de duración del retardo en la estructura
+/*******************************************************************************
+  * @brief  Cambia el valor de duración del retardo en la estructura.
   */
 void delayWrite( delay_t * delay, tick_t duration )
 {

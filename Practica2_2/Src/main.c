@@ -68,7 +68,6 @@ int main(void)
 			  // Se cumplió el tiempo de retardo!
 			  // Cambio estado de led y vuelvo a contar...
 			  BSP_LED_Toggle(Led_N[i]);
-			  delayInit(&retardoLed[i], periodoLed[i]);
 		  }
 
 	  }
@@ -203,6 +202,7 @@ bool_t delayRead( delay_t * delay )
 		if ( (HAL_GetTick()-delay->startTime) > (delay->duration) ) {
 			// Terminó el retardo!!!
 			ended = true;
+			delay->running = false;
 		}
 	}
 	return ended;

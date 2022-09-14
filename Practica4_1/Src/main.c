@@ -15,7 +15,7 @@ const tick_t ventanaAntirrebote = 40;		// El tiempo que debe pasar (en milisegun
 											// para validar un cambio de estado del botón.
 
 /* Private variables ---------------------------------------------------------*/
-estadoMEF_t estadoActual = BUTTON_UP;		// Estado del boton
+debounceState_t estadoActual = BUTTON_UP;		// Estado del boton
 delay_t debounceDelay;						// Estructura para el retardo antirrebote
 UART_HandleTypeDef UartHandle;				// UART handler declaration
 
