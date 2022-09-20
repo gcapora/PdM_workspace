@@ -1,3 +1,5 @@
+Autor: Guillermo F. Caporaletti <gfcaporaletti@undav.edu.ar>
+
 En esta carpeta tenemos las prácticas de Programación de microcontroladores - CESE - FIUBA, implementadas para la placa Nucleo-F429ZI.
 
 Práctica 4_1: Tiene implementado una MEF (máquina de estados finitos) antirrebote en main.c.
