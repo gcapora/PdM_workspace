@@ -1,10 +1,9 @@
 /*******************************************************************************
 * @file    API_debounce.h
 * @author  Guillermo Caporaletti
-* @brief   Práctica 4 - Punto 2:
+* @brief   CESE_Co18 - Práctica 4 - Punto 2:
 *          Implementación de módulo anti-rebote de pulsador.
-********************************************************************************
-*/
+*******************************************************************************/
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __API_DEBOUNCE_H
@@ -31,6 +30,7 @@ void debounceFSM_update();		// Actualiza estado de MFE antirrebote:
 								// y actualizar las salidas.
 bool_t readKey();
 
+/*----------------------------------------------------------------------------*/
 #endif /* __MAIN_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/***************************************************************END OF FILE****/

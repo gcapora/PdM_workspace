@@ -14,8 +14,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_nucleo_144.h"
+#include "errorHandler.h"
 
 /* Exported types ------------------------------------------------------------*/
 typedef bool bool_t;	// Si ya estaba definido, lo sobre-escribe y listo.
@@ -24,7 +26,7 @@ typedef bool bool_t;	// Si ya estaba definido, lo sobre-escribe y listo.
 
 /* Definition for USARTx clock resources */
 #define USARTx                           USART3
-#define USARTx_CLK_ENABLE()              __HAL_RCC_USART3_CLK_ENABLE();	// ¿;?
+#define USARTx_CLK_ENABLE()              __HAL_RCC_USART3_CLK_ENABLE()
 #define USARTx_RX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOD_CLK_ENABLE()
 #define USARTx_TX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOD_CLK_ENABLE()
 #define USARTx_FORCE_RESET()             __HAL_RCC_USART3_FORCE_RESET()

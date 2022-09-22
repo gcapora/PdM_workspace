@@ -2,16 +2,17 @@
 * @file    API_uart.c
 * @author  Guillermo Caporaletti
 * @brief   Módulo para manejo de puerto UART.
-********************************************************************************
-*
 *******************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
 #include "API_uart.h"
-#include "error_Handler.h"
 
 /* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
+/* Private define and const --------------------------------------------------*/
+const uint32_t uartTimeOut = 0x04FF;
+const uint16_t maxSize = 0x0FFF;		// Cantidad máxima de símbolos a
+										// transmitir/recibir  por vez
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
@@ -26,9 +27,22 @@ UART_HandleTypeDef UartHandle;
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
 
+/*******************************************************************************
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART3 and Loop until the end of transmission */
+  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+  return ch;
+}
+
 /* Exported functions --------------------------------------------------------*/
 
-/**
+/*******************************************************************************
   * @brief  Inicializa la conexión por UART
   * @param  None
   * @retval None
@@ -52,35 +66,85 @@ bool_t uartInit() {
   UartHandle.Init.Mode         = UART_MODE_TX_RX;
   UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
   /*##########################################################################*/
+  if (HAL_UART_Init(&UartHandle) == HAL_OK) {
+	  char Cadena[32];
+	  uartSendString((uint8_t *) "Conexion establecida:\n\r");
+
+	  uartSendString((uint8_t *) "Baudios = ");
+	  sprintf(Cadena, "%ld", UartHandle.Init.BaudRate);
+	  //itoa((int) UartHandle.Init.BaudRate, Cadena, 10);
+	  uartSendString((uint8_t *) Cadena);
+	  uartSendString((uint8_t *) "\n\r");
+
+	  uartSendString((uint8_t *) "Largo de palabra = 8\n\r");
+	  uartSendString((uint8_t *) "Bits de parada = 1\n\r");
+	  uartSendString((uint8_t *) "Paridad = Ninguna\n\r");
+
+	  // Esto se podría hacer mejor, pero implicaría traducir cada constante.
+
+  }
 
   return (HAL_UART_Init(&UartHandle) == HAL_OK);
 }
 
-/**
-  * @brief  Transmite por UART
-  * @param  None
+/*******************************************************************************
+  * @brief  Transmite por UART una cadena completa
+  * @param  Puntero a cadena a enviar
   * @retval None
   */
 void uartSendString(uint8_t * pstring) {
-	// hola!!!
+	// ¿El puntero es válido?
+	if (pstring == NULL) Error_Handler();
+
+	// Cuento cantidad de caracteres de la cadena a enviar:
+	uint16_t size = (uint16_t) strlen((char *) pstring);
+		/* Debido a esta función "strlen" debo incluir <string.h>.
+		 * Se podria hacer buscando "\0" con un for.
+		 * Atención con el casteo (char *).
+		 */
+
+	// Verifico que el largo no supere el máximo configurado:
+	size = (size<maxSize) ? size : maxSize;
+
+	// Envío!!!
+	HAL_UART_Transmit(&UartHandle, (uint8_t *) pstring, size, uartTimeOut);
 }
 
-/**
-  * @brief  Transmite por UART una cantidad definida de caracteres
+/*******************************************************************************
+  * @brief  Transmite por UART una cadena de largo definido
   * @param  None
   * @retval None
   */
 void uartSendStringSize(uint8_t * pstring, uint16_t size) {
-	// hola2!!
+	// ¿El puntero es válido?
+	if (pstring == NULL) Error_Handler();
+
+	// Verifico que el largo no supere el largo de la cadena:
+	uint16_t realSize = (uint16_t) strlen((char *) pstring);
+	size = (size>realSize) ? realSize : size;
+
+	// Verifico que el largo no supere el máximo configurado:
+	size = (size<maxSize) ? size : maxSize;
+
+	// Envío!!!
+	HAL_UART_Transmit(&UartHandle, (uint8_t *) pstring, size, uartTimeOut);
 }
 
-/**
+/*******************************************************************************
   * @brief  Recibe por UART una cantidad definida de caracteres
-  * @param  None
+  * @param  Puntero a buffer donde gurdar datos
+  * @param  Cantidad de datos a recibir
   * @retval None
   */
 void uartReceiveStringSize(uint8_t * pstring, uint16_t size) {
-	// chau!
+	// ¿El puntero es válido?
+	if (pstring == NULL) Error_Handler();
+
+	// Verifico que no se supere el máximo:
+	size = (size>maxSize) ? maxSize : size;
+
+	// Recibo...
+	HAL_UART_Receive(&UartHandle, (uint8_t *)pstring, (uint16_t) size, uartTimeOut);
 }
 
 /***************************************************************END OF FILE****/

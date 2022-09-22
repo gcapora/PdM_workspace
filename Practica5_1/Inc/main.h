@@ -13,10 +13,12 @@
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_nucleo_144.h"
 #include "API_uart.h"
-#include "error_Handler.h"
+#include "errorHandler.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants and macros ---------------------------------------------*/
+#define bufferSize 8
+
 /* Exported functions ------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------------*/
