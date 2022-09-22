@@ -73,12 +73,12 @@ int main(void)
 	  // Si hay flanco descendiente cambio parpadeo
 	  if (readKey()) {
 		  CambiarTiempoParpadeoLed();
-		  uartSendString((uint8_t *) "Flanco descendente: boton presionado!\n\r");
+		  uartSendString((uint8_t *) "Boton presionado!\n\r");
 	  }
 
 	  // Si hay flanco ascendiente mando texto
 	  if (readKeyUp()) {
-		  uartSendString((uint8_t *) "Flanco ascendente: boton soltado!\n\r");
+		  uartSendString((uint8_t *) "Boton soltado!\n\r");
 	  }
   }
 } /* Fin de función main ******************************************************/

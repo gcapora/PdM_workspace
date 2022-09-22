@@ -38,9 +38,9 @@ static void buttonReleased();			// Acción de salida = togglear el LED3
 * @retval None
 */
 bool_t readKeyUp() {
-	bool_t salida = FlancoAscendente;
-	if (FlancoAscendente == true) {
-		// Reseteo registro de flanco ascendente
+	bool_t salida = FlancoDescendente;
+	if (FlancoDescendente == true) {
+		// Reseteo registro de flancos
 		FlancoAscendente = false;
 		FlancoDescendente = false;
 	}
@@ -53,9 +53,9 @@ bool_t readKeyUp() {
 * @retval None
 */
 bool_t readKey() {
-	bool_t salida = FlancoDescendente;
-	if (FlancoDescendente == true) {
-		// Reseteo registro de flanco ascendente
+	bool_t salida = FlancoAscendente;
+	if (FlancoAscendente == true) {
+		// Reseteo registro de flancos
 		FlancoAscendente = false;
 		FlancoDescendente = false;
 	}
@@ -109,7 +109,7 @@ void debounceFSM_update() {
 				} else {
 					// Hay un cambio de estado!!!
 					estadoActual = BUTTON_DOWN;
-					buttonPressed();	// Acción de flanco descendente.
+					buttonPressed();	// Acción de flanco ascendente de señal.
 				}
 			}
 		break;
@@ -131,7 +131,7 @@ void debounceFSM_update() {
 				} else {
 					// Hay un cambio de estado!!!
 					estadoActual = BUTTON_UP;
-					buttonReleased();	// Acción de flanco ascendente.
+					buttonReleased();	// Acción de flanco descendente de señal.
 				}
 			}
 		break;
@@ -149,7 +149,7 @@ void debounceFSM_update() {
 */
 void buttonPressed() {
 	//BSP_LED_Toggle(LED1);
-	FlancoDescendente = true;	// Dejo registrado que hubo flanco descendente
+	FlancoAscendente = true;	// Dejo registrado que hubo flanco ascendente
 }
 
 /*******************************************************************************
@@ -159,7 +159,7 @@ void buttonPressed() {
 */
 void buttonReleased()  {
 	// BSP_LED_Toggle(LED3);
-	FlancoAscendente = true;	// Dejo registrado que hubo flanco ascendente
+	FlancoDescendente = true;	// Dejo registrado que hubo flanco descendente
 }
 
 /***************************************************************END OF FILE****/

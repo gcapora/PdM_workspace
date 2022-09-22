@@ -7,19 +7,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00002f1c  080001b0  080001b0  000101b0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000110  080030cc  080030cc  000130cc  2**2
+  2 .rodata       000000ec  080030cc  080030cc  000130cc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080031dc  080031dc  00020084  2**0
+  3 .ARM.extab    00000000  080031b8  080031b8  00020084  2**0
                   CONTENTS
-  4 .ARM          00000008  080031dc  080031dc  000131dc  2**2
+  4 .ARM          00000008  080031b8  080031b8  000131b8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080031e4  080031e4  00020084  2**0
+  5 .preinit_array 00000000  080031c0  080031c0  00020084  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080031e4  080031e4  000131e4  2**2
+  6 .init_array   00000004  080031c0  080031c0  000131c0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080031e8  080031e8  000131e8  2**2
+  7 .fini_array   00000004  080031c4  080031c4  000131c4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000084  20000000  080031ec  00020000  2**2
+  8 .data         00000084  20000000  080031c8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  00020084  2**0
                   CONTENTS
@@ -431,22 +431,22 @@ bool_t readKeyUp() {
  80005a4:	b480      	push	{r7}
  80005a6:	b083      	sub	sp, #12
  80005a8:	af00      	add	r7, sp, #0
-	bool_t salida = FlancoAscendente;
+	bool_t salida = FlancoDescendente;
  80005aa:	4b0a      	ldr	r3, [pc, #40]	; (80005d4 <readKeyUp+0x30>)
  80005ac:	781b      	ldrb	r3, [r3, #0]
  80005ae:	71fb      	strb	r3, [r7, #7]
-	if (FlancoAscendente == true) {
+	if (FlancoDescendente == true) {
  80005b0:	4b08      	ldr	r3, [pc, #32]	; (80005d4 <readKeyUp+0x30>)
  80005b2:	781b      	ldrb	r3, [r3, #0]
  80005b4:	2b00      	cmp	r3, #0
  80005b6:	d005      	beq.n	80005c4 <readKeyUp+0x20>
-		// Reseteo registro de flanco ascendente
+		// Reseteo registro de flancos
 		FlancoAscendente = false;
- 80005b8:	4b06      	ldr	r3, [pc, #24]	; (80005d4 <readKeyUp+0x30>)
+ 80005b8:	4b07      	ldr	r3, [pc, #28]	; (80005d8 <readKeyUp+0x34>)
  80005ba:	2200      	movs	r2, #0
  80005bc:	701a      	strb	r2, [r3, #0]
 		FlancoDescendente = false;
- 80005be:	4b06      	ldr	r3, [pc, #24]	; (80005d8 <readKeyUp+0x34>)
+ 80005be:	4b05      	ldr	r3, [pc, #20]	; (80005d4 <readKeyUp+0x30>)
  80005c0:	2200      	movs	r2, #0
  80005c2:	701a      	strb	r2, [r3, #0]
 	}
@@ -459,8 +459,8 @@ bool_t readKeyUp() {
  80005cc:	f85d 7b04 	ldr.w	r7, [sp], #4
  80005d0:	4770      	bx	lr
  80005d2:	bf00      	nop
- 80005d4:	200000b0 	.word	0x200000b0
- 80005d8:	200000b1 	.word	0x200000b1
+ 80005d4:	200000b1 	.word	0x200000b1
+ 80005d8:	200000b0 	.word	0x200000b0
 
 080005dc <readKey>:
 /*******************************************************************************
@@ -472,22 +472,22 @@ bool_t readKey() {
  80005dc:	b480      	push	{r7}
  80005de:	b083      	sub	sp, #12
  80005e0:	af00      	add	r7, sp, #0
-	bool_t salida = FlancoDescendente;
+	bool_t salida = FlancoAscendente;
  80005e2:	4b0a      	ldr	r3, [pc, #40]	; (800060c <readKey+0x30>)
  80005e4:	781b      	ldrb	r3, [r3, #0]
  80005e6:	71fb      	strb	r3, [r7, #7]
-	if (FlancoDescendente == true) {
+	if (FlancoAscendente == true) {
  80005e8:	4b08      	ldr	r3, [pc, #32]	; (800060c <readKey+0x30>)
  80005ea:	781b      	ldrb	r3, [r3, #0]
  80005ec:	2b00      	cmp	r3, #0
  80005ee:	d005      	beq.n	80005fc <readKey+0x20>
-		// Reseteo registro de flanco ascendente
+		// Reseteo registro de flancos
 		FlancoAscendente = false;
- 80005f0:	4b07      	ldr	r3, [pc, #28]	; (8000610 <readKey+0x34>)
+ 80005f0:	4b06      	ldr	r3, [pc, #24]	; (800060c <readKey+0x30>)
  80005f2:	2200      	movs	r2, #0
  80005f4:	701a      	strb	r2, [r3, #0]
 		FlancoDescendente = false;
- 80005f6:	4b05      	ldr	r3, [pc, #20]	; (800060c <readKey+0x30>)
+ 80005f6:	4b06      	ldr	r3, [pc, #24]	; (8000610 <readKey+0x34>)
  80005f8:	2200      	movs	r2, #0
  80005fa:	701a      	strb	r2, [r3, #0]
 	}
@@ -500,8 +500,8 @@ bool_t readKey() {
  8000604:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000608:	4770      	bx	lr
  800060a:	bf00      	nop
- 800060c:	200000b1 	.word	0x200000b1
- 8000610:	200000b0 	.word	0x200000b0
+ 800060c:	200000b0 	.word	0x200000b0
+ 8000610:	200000b1 	.word	0x200000b1
 
 08000614 <debounceFSM_init>:
 /*******************************************************************************
@@ -615,7 +615,7 @@ void debounceFSM_update() {
  80006b2:	701a      	strb	r2, [r3, #0]
 					// Hay un cambio de estado!!!
 					estadoActual = BUTTON_DOWN;
-					buttonPressed();	// Acción de flanco descendente.
+					buttonPressed();	// Acción de flanco ascendente de señal.
 				}
 			}
 		break;
@@ -624,7 +624,7 @@ void debounceFSM_update() {
  80006b6:	4b18      	ldr	r3, [pc, #96]	; (8000718 <debounceFSM_update+0xc8>)
  80006b8:	2202      	movs	r2, #2
  80006ba:	701a      	strb	r2, [r3, #0]
-					buttonPressed();	// Acción de flanco descendente.
+					buttonPressed();	// Acción de flanco ascendente de señal.
  80006bc:	f000 f830 	bl	8000720 <buttonPressed>
 		break;
  80006c0:	e021      	b.n	8000706 <debounceFSM_update+0xb6>
@@ -665,7 +665,7 @@ void debounceFSM_update() {
  80006ec:	701a      	strb	r2, [r3, #0]
 					// Hay un cambio de estado!!!
 					estadoActual = BUTTON_UP;
-					buttonReleased();	// Acción de flanco ascendente.
+					buttonReleased();	// Acción de flanco descendente de señal.
 				}
 			}
 		break;
@@ -674,7 +674,7 @@ void debounceFSM_update() {
  80006f0:	4b09      	ldr	r3, [pc, #36]	; (8000718 <debounceFSM_update+0xc8>)
  80006f2:	2200      	movs	r2, #0
  80006f4:	701a      	strb	r2, [r3, #0]
-					buttonReleased();	// Acción de flanco ascendente.
+					buttonReleased();	// Acción de flanco descendente de señal.
  80006f6:	f000 f81f 	bl	8000738 <buttonReleased>
 		break;
  80006fa:	e008      	b.n	800070e <debounceFSM_update+0xbe>
@@ -714,7 +714,7 @@ void buttonPressed() {
  8000720:	b480      	push	{r7}
  8000722:	af00      	add	r7, sp, #0
 	//BSP_LED_Toggle(LED1);
-	FlancoDescendente = true;	// Dejo registrado que hubo flanco descendente
+	FlancoAscendente = true;	// Dejo registrado que hubo flanco ascendente
  8000724:	4b03      	ldr	r3, [pc, #12]	; (8000734 <buttonPressed+0x14>)
  8000726:	2201      	movs	r2, #1
  8000728:	701a      	strb	r2, [r3, #0]
@@ -723,7 +723,7 @@ void buttonPressed() {
  800072c:	46bd      	mov	sp, r7
  800072e:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000732:	4770      	bx	lr
- 8000734:	200000b1 	.word	0x200000b1
+ 8000734:	200000b0 	.word	0x200000b0
 
 08000738 <buttonReleased>:
 /*******************************************************************************
@@ -735,7 +735,7 @@ void buttonReleased()  {
  8000738:	b480      	push	{r7}
  800073a:	af00      	add	r7, sp, #0
 	// BSP_LED_Toggle(LED3);
-	FlancoAscendente = true;	// Dejo registrado que hubo flanco ascendente
+	FlancoDescendente = true;	// Dejo registrado que hubo flanco descendente
  800073c:	4b03      	ldr	r3, [pc, #12]	; (800074c <buttonReleased+0x14>)
  800073e:	2201      	movs	r2, #1
  8000740:	701a      	strb	r2, [r3, #0]
@@ -744,7 +744,7 @@ void buttonReleased()  {
  8000744:	46bd      	mov	sp, r7
  8000746:	f85d 7b04 	ldr.w	r7, [sp], #4
  800074a:	4770      	bx	lr
- 800074c:	200000b0 	.word	0x200000b0
+ 800074c:	200000b1 	.word	0x200000b1
 
 08000750 <delayInit>:
 /*******************************************************************************
@@ -1199,7 +1199,7 @@ void BSP_LED_Init(Led_TypeDef Led)
  80009e0:	46bd      	mov	sp, r7
  80009e2:	bd80      	pop	{r7, pc}
  80009e4:	40023800 	.word	0x40023800
- 80009e8:	08003188 	.word	0x08003188
+ 80009e8:	08003164 	.word	0x08003164
  80009ec:	20000000 	.word	0x20000000
 
 080009f0 <BSP_LED_Off>:
@@ -1231,7 +1231,7 @@ void BSP_LED_Off(Led_TypeDef Led)
  8000a18:	bd80      	pop	{r7, pc}
  8000a1a:	bf00      	nop
  8000a1c:	20000000 	.word	0x20000000
- 8000a20:	08003188 	.word	0x08003188
+ 8000a20:	08003164 	.word	0x08003164
 
 08000a24 <BSP_LED_Toggle>:
   *     @arg  LED1
@@ -1262,7 +1262,7 @@ void BSP_LED_Toggle(Led_TypeDef Led)
  8000a4c:	bd80      	pop	{r7, pc}
  8000a4e:	bf00      	nop
  8000a50:	20000000 	.word	0x20000000
- 8000a54:	08003188 	.word	0x08003188
+ 8000a54:	08003164 	.word	0x08003164
 
 08000a58 <BSP_PB_Init>:
   *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO 
@@ -4401,7 +4401,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  8001b92:	bf00      	nop
  8001b94:	40023c00 	.word	0x40023c00
  8001b98:	40023800 	.word	0x40023800
- 8001b9c:	08003190 	.word	0x08003190
+ 8001b9c:	0800316c 	.word	0x0800316c
  8001ba0:	20000010 	.word	0x20000010
  8001ba4:	20000014 	.word	0x20000014
 
@@ -4703,7 +4703,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001de8:	4618      	mov	r0, r3
  8001dea:	bd80      	pop	{r7, pc}
  8001dec:	40023800 	.word	0x40023800
- 8001df0:	080031a0 	.word	0x080031a0
+ 8001df0:	0800317c 	.word	0x0800317c
 
 08001df4 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4729,7 +4729,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001e10:	4618      	mov	r0, r3
  8001e12:	bd80      	pop	{r7, pc}
  8001e14:	40023800 	.word	0x40023800
- 8001e18:	080031a0 	.word	0x080031a0
+ 8001e18:	0800317c 	.word	0x0800317c
 
 08001e1c <HAL_UART_Init>:
   * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
@@ -5796,7 +5796,7 @@ int main(void)
  80025f8:	d004      	beq.n	8002604 <main+0x64>
 		  CambiarTiempoParpadeoLed();
  80025fa:	f000 f875 	bl	80026e8 <CambiarTiempoParpadeoLed>
-		  uartSendString((uint8_t *) "Flanco descendente: boton presionado!\n\r");
+		  uartSendString((uint8_t *) "Boton presionado!\n\r");
  80025fe:	4807      	ldr	r0, [pc, #28]	; (800261c <main+0x7c>)
  8002600:	f7fe f96a 	bl	80008d8 <uartSendString>
 	  }
@@ -5807,7 +5807,7 @@ int main(void)
  8002608:	4603      	mov	r3, r0
  800260a:	2b00      	cmp	r3, #0
  800260c:	d0e5      	beq.n	80025da <main+0x3a>
-		  uartSendString((uint8_t *) "Flanco ascendente: boton soltado!\n\r");
+		  uartSendString((uint8_t *) "Boton soltado!\n\r");
  800260e:	4804      	ldr	r0, [pc, #16]	; (8002620 <main+0x80>)
  8002610:	f7fe f962 	bl	80008d8 <uartSendString>
 	  debounceFSM_update();
@@ -5815,7 +5815,7 @@ int main(void)
  8002616:	bf00      	nop
  8002618:	20000100 	.word	0x20000100
  800261c:	0800313c 	.word	0x0800313c
- 8002620:	08003164 	.word	0x08003164
+ 8002620:	08003150 	.word	0x08003150
 
 08002624 <SystemClock_Config>:
   *            Flash Latency(WS)              = 5
@@ -6083,7 +6083,7 @@ LoopFillZerobss:
   ldr   sp, =_estack       /* set stack pointer */
  8002768:	20030000 	.word	0x20030000
   ldr  r3, =_sidata
- 800276c:	080031ec 	.word	0x080031ec
+ 800276c:	080031c8 	.word	0x080031c8
   ldr  r0, =_sdata
  8002770:	20000000 	.word	0x20000000
   ldr  r3, =_edata
@@ -6136,10 +6136,10 @@ Infinite_Loop:
  80027c2:	4798      	blx	r3
  80027c4:	3601      	adds	r6, #1
  80027c6:	e7f2      	b.n	80027ae <__libc_init_array+0x1e>
- 80027c8:	080031e4 	.word	0x080031e4
- 80027cc:	080031e4 	.word	0x080031e4
- 80027d0:	080031e4 	.word	0x080031e4
- 80027d4:	080031e8 	.word	0x080031e8
+ 80027c8:	080031c0 	.word	0x080031c0
+ 80027cc:	080031c0 	.word	0x080031c0
+ 80027d0:	080031c0 	.word	0x080031c0
+ 80027d4:	080031c4 	.word	0x080031c4
 
 080027d8 <siprintf>:
  80027d8:	b40e      	push	{r1, r2, r3}
@@ -6448,11 +6448,11 @@ Infinite_Loop:
  8002ab4:	f000 f87a 	bl	8002bac <_printf_i>
  8002ab8:	e7eb      	b.n	8002a92 <_svfiprintf_r+0x1c2>
  8002aba:	bf00      	nop
- 8002abc:	080031a8 	.word	0x080031a8
- 8002ac0:	080031b2 	.word	0x080031b2
+ 8002abc:	08003184 	.word	0x08003184
+ 8002ac0:	0800318e 	.word	0x0800318e
  8002ac4:	00000000 	.word	0x00000000
  8002ac8:	08002819 	.word	0x08002819
- 8002acc:	080031ae 	.word	0x080031ae
+ 8002acc:	0800318a 	.word	0x0800318a
 
 08002ad0 <_printf_common>:
  8002ad0:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -6788,8 +6788,8 @@ Infinite_Loop:
  8002de8:	f104 0619 	add.w	r6, r4, #25
  8002dec:	e7f5      	b.n	8002dda <_printf_i+0x22e>
  8002dee:	bf00      	nop
- 8002df0:	080031b9 	.word	0x080031b9
- 8002df4:	080031ca 	.word	0x080031ca
+ 8002df0:	08003195 	.word	0x08003195
+ 8002df4:	080031a6 	.word	0x080031a6
 
 08002df8 <memcpy>:
  8002df8:	440a      	add	r2, r1
