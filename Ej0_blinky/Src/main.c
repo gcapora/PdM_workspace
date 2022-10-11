@@ -66,13 +66,24 @@ int main(void)
   SystemClock_Config();
 
   /* Initialize BSP Led for LED2 */
-  BSP_LED_Init(LED2);
+  // BSP_LED_Init(LED2);
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /* Configure the GPIO de otro led */
+  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_7 | GPIO_PIN_14; // ;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_7 | GPIO_PIN_14, GPIO_PIN_SET);
 
   /* Infinite loop */
   while (1)
   {
-	  BSP_LED_Toggle(LED2);
+	  //BSP_LED_Toggle(LED2);
 	  HAL_Delay(500);
+	  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_7 | GPIO_PIN_14); // | GPIO_PIN_7 | GPIO_PIN_14);
   }
 }
 
