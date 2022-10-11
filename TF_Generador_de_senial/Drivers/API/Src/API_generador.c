@@ -89,10 +89,21 @@ void Gen_Recibir(void) {
   * @retval None
   */
 void Gen_Cargar(uint32_t Senial[]) {
+	// Chequeo que la Senial tenga todos los datos que necesito
+	for (uint16_t i=0; i<N_MUESTRAS; i++) {
+		// Verifico que Senial[] sea acorde a 12 bits
+		if (Senial[i] > 0x0FFF) Error_Handler();
+	}
+
+	// Copio valores
 	for (uint16_t i=0; i<N_MUESTRAS; i++) GeneradorDAC2.senial[i] = Senial[i];
+
+	// Actualizo el estado
 	GeneradorDAC2.cargado = true;
-	BSP_LED_Off(LED_GREEN);
 	GeneradorDAC2.estado = Cargado;
+
+	// Informo con leds y por UART
+	BSP_LED_Off(LED_GREEN);
 	delayWrite( &parpadeoLedAzul, TIEMPO_PARPADEO_CARGADO );
     uartClearBuffer();
     uartSendString((uint8_t *) "Senial cargada en generador.\n");

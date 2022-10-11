@@ -34,6 +34,9 @@ void Error_Handler_Init(void)
 */
 void Error_Handler(void)
 {
+  /* Inicializo por las dudas */
+  Error_Handler_Init();
+
   /* Turn LED2 on */
   BSP_LED_Off(LED1);
   BSP_LED_Off(LED2);
